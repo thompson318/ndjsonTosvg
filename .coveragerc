@@ -1,0 +1,6 @@
+[run]
+omit = 
+        ./ndjsontosvg/_version.py
+        ./ndjsontosvg/__init__.py
+        ./ndjsontosvg/__main__.py
+        ./ndjsontosvg/ui/ndjsontosvg_command_line.py
