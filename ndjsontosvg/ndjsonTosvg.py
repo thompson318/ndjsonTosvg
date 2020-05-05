@@ -1,5 +1,16 @@
 #! /usr/bin/python3
 
+def write_header(f):
+    f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
+    f.write('<!--Created with ndjsontosvg (https:https://github.com/thompson318/ndjsontosvg) \n')
+    f.write('\tfrom the simplified Google quickdraw data set.-->\n')
+    f.write('<svg width="256" height="256"\n')
+    f.write('\txmlns="http://www.w3.org/2000/svg">\n')
+    f.write('\txmlns:ndjsontosvg="https://github.com/thompson318/ndjsontosvg"\n')
+    f.write('\txmlns:quickdraw="https://quickdraw.withgoogle.com/data"\n')
+    f.write('\txmlns:scikit-surgery="https://doi.org/10.1007/s11548-020-02180-5">\n\n')
+
+
 import ndjson
 
 data = None
@@ -15,7 +26,7 @@ for index, item in enumerate(data):
     outfilename = 'cat_{:04d}.svg'.format(index)
     with open(outfilename, 'w') as f:
         drawing = item.get('drawing')
-        f.write('<svg width="256" height="256" xmlns="http://www.w3.org/2000/svg">\n')
+        write_header(f)
         f.write('\t<rect width="100%" height="100%" fill="white" />\n')
         for line in drawing:
             x_ordinates = line[0]
