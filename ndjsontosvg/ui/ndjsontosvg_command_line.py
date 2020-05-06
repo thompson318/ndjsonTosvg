@@ -5,7 +5,7 @@
 
 import argparse
 from ndjsontosvg import __version__
-from ndjsontosvg.ui.ndjsontosvg_demo import run_demo
+from ndjsontosvg.ndjsontosvg import ndjsontosvg
 
 
 def main(args=None):
@@ -14,25 +14,53 @@ def main(args=None):
     parser = argparse.ArgumentParser(description='ndjsonTosvg')
 
     ## ADD POSITIONAL ARGUMENTS
-    parser.add_argument("x",
-                        type=int,
-                        help="1st number")
+    parser.add_argument("-i", "--filein",
+                        required=True,
+                        type=str,
+                        help="the input file (ndjson format)")
 
-    parser.add_argument("y",
+    parser.add_argument("-s", "--outsize",
+                        required=True,
                         type=int,
-                        help="2nd number")
+                        help="The desired out put size (pixels)")
+    
+    parser.add_argument("-n", "--numberofsamples",
+                        required=True,
+                        type=int,
+                        help="The number of samples to write out.")
 
     # ADD OPTINAL ARGUMENTS
-    parser.add_argument("-m", "--multiply",
-                        action="store_true",
-                        help="Enable multiplication of inputs."
+    parser.add_argument("-lc", "--linecolour",
+                        default="black",
+                        help="The line colour to use."
+                        )
+    
+    parser.add_argument("-bc", "--backgroundcolour",
+                        default="white",
+                        help="The background colour to use."
                         )
 
-    parser.add_argument("-v", "--verbose",
-                        action="store_true",
-                        help="Enable verbose output",
+    parser.add_argument("-o", "--outdir",
+                        default="./",
+                        help="The output directory."
                         )
 
+    parser.add_argument("-ci", "--checkifidentified",
+                        action="store_true",
+                        help="Only select entries that were recognized by google AI",
+                        )
+
+    parser.add_argument("-rs", "--randomsort",
+                        action="store_true",
+                        help="Make a random selection, rather than the first n lines",
+                        )
+
+
+    parser.add_argument("-is", "--inputsize",
+                        default=256,
+                        help="The input image size, 256 pixels for the simplified quickdraw data set"
+                        )
+    
     version_string = __version__
     friendly_version_string = version_string if version_string else 'unknown'
     parser.add_argument(
@@ -42,4 +70,6 @@ def main(args=None):
 
     args = parser.parse_args(args)
 
-    run_demo(args.x, args.y, args.multiply, args.verbose)
+    ndjsontosvg(args.filein, args.outsize, args.numberofsamples, args.linecolour,
+                    args.backgroundcolour, args.outdir, args.checkifidentified,
+                    args.randomsort, args.inputsize)

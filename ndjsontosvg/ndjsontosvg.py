@@ -1,6 +1,10 @@
 #! /usr/bin/python3
 
 import ndjson
+import random
+import os
+import ntpath
+
 def _write_header(f, out_size, key_id):
     """ 
     Writes the svg header to file f 
@@ -37,16 +41,32 @@ def _draw_line(fileout, line, colour, scale):
 
 
 
-def ndjsontosvns(filein, input_size, out_size , 
-                 line_colour='black', background_colour='white', 
-                 check_if_identified = True):
-    scale = out_size / input_size
+def ndjsontosvg(filein, outsize , numberofsamples,
+                 linecolour='black', backgroundcolour='white', 
+                 outdir = "./",
+                 checkifidentified = True, randomsort = True,
+                 inputsize = 256):
+    
+    print("filein =  " + filein)
+    print("outsize =  " + str(outsize))
+    print("ns =  " + str(numberofsamples))
+    print("outdir =  " + outdir)
+    if numberofsamples > 10000:
+       raise ValueError("Maximum number_of_samples is 10000")
+    
+    fileoutprefix=os.path.splitext(ntpath.basename(filein))[0]
+    print("fileoutprefix =  " + fileoutprefix)
+    scale = outsize / inputsize
     data = None
-    with open('cat_200.ndjson') as f:
+    with open(filein) as f:
         data = ndjson.load(f)
 
-    for index, item in enumerate(data):
-        if check_if_identified:    
+    if randomsort:
+        random.shuffle(data);
+    samples = 0;
+    
+    for item in data:
+        if checkifidentified:    
             if 'recognized' not in item:
                 raise KeyError("Item has no recognized key")
             if not item.get('recognized'):
@@ -58,19 +78,27 @@ def ndjsontosvns(filein, input_size, out_size ,
         if 'key_id' not in item:
             raise KeyError("Item has no key_id data")
         
-        outfilename = 'cat_{:04d}.svg'.format(index)
+        outfilename = os.path.join(outdir, fileoutprefix +  '_{:04d}.svg'.format(samples))
 
         with open(outfilename, 'w') as f:
             drawing = item.get('drawing')
-            _write_header(f, out_size, item.get('key_id'))
-            f.write('\t<rect width="100%" height="100%" fill="{:s}" />\n'.format(background_colour))
+            _write_header(f, outsize, item.get('key_id'))
+            f.write('\t<rect width="100%" height="100%" fill="{:s}" />\n'.format(backgroundcolour))
             for line in drawing:
-                _draw_line(f, line, line_colour, scale)
+                _draw_line(f, line, linecolour, scale)
             f.write('</svg>')
+        
+        samples += 1
+        if samples >= numberofsamples:
+            break
+
 
 if __name__ == '__main__':
-    in_size = 256  #this is from the simplified data set
-    out_size = 600 #this is what we want it to be, it's easier to set it in the image, as phaser doesn't scale svg well
-    line_colour = "black"
-    background_colour = "white"
-    ndjsontosvns('cat_200.ndjson', in_size, out_size, line_colour, background_colour)
+    insize = 256  #this is from the simplified data set
+    outsize = 600 #this is what we want it to be, it's easier to set it in the image, as phaser doesn't scale svg well
+    linecolour = "black"
+    backgroundcolour = "white"
+    numberofsamples = 100
+    outdir = "white_on_black/"
+    ndjsontosvns('hot air balloon.ndjson', outsize, numberofsamples, linecolour, backgroundcolour,
+                    outdir )
