@@ -3,6 +3,7 @@
 import os
 import random
 import ntpath
+import warnings
 import ndjson
 
 def _write_header(f_out, out_size, key_id):
@@ -24,7 +25,7 @@ def _write_header(f_out, out_size, key_id):
     f_out.write('ndjsontosvg="https://github.com/thompson318/ndjsontosvg"\n')
     f_out.write('\txmlns:quickdraw="https://quickdraw.withgoogle.com/data"\n')
     f_out.write('\txmlns:scikit-surgery=')
-    f_out.write('"https://doi.org/10.1007/s11548-020-02180-5"/>\n\n')
+    f_out.write('"https://doi.org/10.1007/s11548-020-02180-5">\n\n')
 
 
 def _draw_line(fileout, line, colour, scale):
@@ -113,3 +114,8 @@ def ndjsontosvg(filein, numberofsamples, outsize=256,
         samples += 1
         if samples >= numberofsamples:
             break
+
+    if samples < numberofsamples:
+            warnings.warn(
+                "Ran out of samples in ndjson file, only wrote {:d} images".format(samples))
+
