@@ -12,7 +12,7 @@ def main(args=None):
     parser = argparse.ArgumentParser(description='ndjsonTosvg')
 
     ## ADD POSITIONAL ARGUMENTS
-    parser.add_argument("-i", "--filein",
+    parser.add_argument('--filein', '-i',
                         required=True,
                         type=str,
                         help="the input file (ndjson format)")
@@ -46,7 +46,7 @@ def main(args=None):
     parser.add_argument("-ci", "--checkifidentified",
                         action="store_true",
                         help="Only select entries that were recognized by" + \
-                            "google AI",
+                            " google AI",
                         )
 
     parser.add_argument("-rs", "--randomsort",

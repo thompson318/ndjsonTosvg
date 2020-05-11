@@ -116,6 +116,6 @@ def ndjsontosvg(filein, numberofsamples, outsize=256,
             break
 
     if samples < numberofsamples:
-            warnings.warn(
-                "Ran out of samples in ndjson file, only wrote {:d} images".format(samples))
-
+        warnings.warn(
+            "Ran out of samples in ndjson file, only wrote " +
+            "{:d} images".format(samples))
