@@ -1,27 +1,18 @@
 # coding=utf-8
 
 """ndjsonTosvg tests"""
-
-from ndjsontosvg.ui.ndjsontosvg_demo import run_demo
-from ndjsontosvg.algorithms import addition, multiplication
-import six
+import pytest
+from ndjsontosvg.ndjsontosvg import ndjsontosvg
 
 # Pytest style
 
-def test_using_pytest_ndjsontosvg():
-    x = 1
-    y = 2
-    verbose = False
-    multiply = False
+def test_default():
+    filein = 'tests/data/mushroom_10.ndjson'
+    fileout = 'tests/.output'
+    samples = 1
+    ndjsontosvg(filein, samples, outdir = fileout)
 
-    expected_answer = 3
-    assert run_demo(x, y, multiply, verbose) == expected_answer
 
-def test_addition():
 
-    assert addition.add_two_numbers(1, 2) == 3
 
-def test_multiplication():
-
-    assert multiplication.multiply_two_numbers(2, 2) == 4
 
