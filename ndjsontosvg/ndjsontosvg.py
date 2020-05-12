@@ -72,9 +72,14 @@ def ndjsontosvg(filein, numberofsamples, outsize=256,
 
     :raises ValueError: If more that 10000 samples requested.
     :raises KeyError: If ndjson is missing expected fields.
+    :raises IOError: If output dir does not exist.
     """
     if numberofsamples > 10000:
         raise ValueError("Maximum number_of_samples is 10000")
+
+    if not os.path.isdir(outdir):
+        raise IOError("outdir ({:s}) does not exist.".format(outdir) +
+                      "Please create it first")
 
     fileoutprefix = os.path.splitext(ntpath.basename(filein))[0]
     scale = outsize / inputsize
