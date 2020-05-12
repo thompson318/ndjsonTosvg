@@ -57,6 +57,7 @@ def ndjsontosvg(filein, numberofsamples, outsize=256,
     """
     converts a multiline google quickdraw simplified format file into
     separate svg images.
+
     :params filein: the input json file
     :params numberofsamples: how many drawings to generate
     :params outsize: You can set the outsize, simplified quickdraw
