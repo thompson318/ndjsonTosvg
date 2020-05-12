@@ -1,27 +1,59 @@
 # coding=utf-8
 
 """ndjsonTosvg tests"""
-
-from ndjsontosvg.ui.ndjsontosvg_demo import run_demo
-from ndjsontosvg.algorithms import addition, multiplication
-import six
+import pytest
+import os
+import warnings
+from ndjsontosvg.ndjsontosvg import ndjsontosvg
 
 # Pytest style
 
-def test_using_pytest_ndjsontosvg():
-    x = 1
-    y = 2
-    verbose = False
-    multiply = False
+def test_default():
+    filein = 'tests/data/mushroom_10.ndjson'
+    fileout = 'tests/output'
+    samples = 1
+    with pytest.raises(IOError):
+        ndjsontosvg(filein, samples, outdir = fileout)
 
-    expected_answer = 3
-    assert run_demo(x, y, multiply, verbose) == expected_answer
+    os.mkdir(fileout)
 
-def test_addition():
+    ndjsontosvg(filein, samples, outdir = fileout)
+    
+    assert os.path.isfile(os.path.join(fileout, 'mushroom_10_0000.svg'))
 
-    assert addition.add_two_numbers(1, 2) == 3
+def test_settings():
+    filein = 'tests/data/mushroom_10.ndjson'
+    fileout = 'tests/output'
+    samples = 9
+    outsize = 600
+    linecolour = 'white'
+    backgroundcolour = 'black'
+    checkifidentified = False
+    randomsort = False
+    inputsize = 256
+    
+    if not os.path.isdir(fileout):
+        os.mkdir(fileout)
 
-def test_multiplication():
+    ndjsontosvg(filein, samples, outsize, linecolour, backgroundcolour,
+                fileout, checkifidentified, randomsort, inputsize)
 
-    assert multiplication.multiply_two_numbers(2, 2) == 4
+    assert os.path.isfile(os.path.join(fileout, 'mushroom_10_0008.svg'))
+    
+    samples = 10
 
+    ndjsontosvg(filein, samples, outsize, linecolour, backgroundcolour,
+                fileout, checkifidentified, randomsort, inputsize)
+
+    assert os.path.isfile(os.path.join(fileout, 'mushroom_10_0009.svg'))
+
+    checkifidentified = True
+    
+    with pytest.warns(UserWarning):
+        ndjsontosvg(filein, samples, outsize, linecolour, backgroundcolour,
+                    fileout, checkifidentified, randomsort, inputsize)
+    
+    samples = 10001
+    with pytest.raises(ValueError):
+        ndjsontosvg(filein, samples, outsize, linecolour, backgroundcolour,
+                    fileout, checkifidentified, randomsort, inputsize)

@@ -7,32 +7,38 @@ ndjsonTosvg
    :target: https://github.com/thompson318/ndjsonTosvg
    :alt: Logo
 
-.. image:: https://github.com/thompson318/ndjsonTosvg/badges/master/build.svg
-   :target: https://github.com/thompson318/ndjsonTosvg/pipelines
-   :alt: GitLab-CI test status
+.. image:: https://github.com/thompson318/ndjsonTosvg/workflows/.github/workflows/ci.yml/badge.svg
+   :target: https://github.com/thompson318/ndjsonTosvg/actions
+   :alt: GitHub Actions CI status
 
-.. image:: https://github.com/thompson318/ndjsonTosvg/badges/master/coverage.svg
-    :target: https://github.com/thompson318/ndjsonTosvg/commits/master
+.. image:: https://coveralls.io/repos/github/thompson318/ndjsonTosvg/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/repos/github/thompson318/ndjsonTosvg?branch=master
     :alt: Test coverage
 
-.. image:: https://readthedocs.org/projects/ndjsonTosvg/badge/?version=latest
+.. image:: https://readthedocs.org/projects/ndjsontosvg/badge/?version=latest 
     :target: http://ndjsonTosvg.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-
-
 Author: Stephen Thompson
 
-ndjsonTosvg is part of the `SNAPPY`_ software project, developed at the `Wellcome EPSRC Centre for Interventional and Surgical Sciences`_, part of `University College London (UCL)`_.
+ndjsonTosvg is a utility to convert data from Google's `Quickdraw`_ dataset to scalable vector
+graphics format. The input data should be in Google's simplified ndjson format. 
 
-ndjsonTosvg supports Python 2.7 and Python 3.6.
+ndjsonTosvg is part of the `SciKit-Surgery`_ software project, developed at the `Wellcome EPSRC Centre for Interventional and Surgical Sciences`_, part of `University College London (UCL)`_.
 
-ndjsonTosvg is currently a demo project, which will add/multiply two numbers. Example usage:
+ndjsonTosvg supports Python 3.x.
+
+Usage 
+
+::
+    
+    ndjsonTosvg --filein FILEIN -n NUMBEROFSAMPLES
+
+For more usage run
 
 ::
 
-    python ndjsontosvg.py 5 8
-    python ndjsontosvg.py 3 6 --multiply
+    ndjsonTosvg --help
 
 Please explore the project structure, and implement your own functionality.
 
@@ -105,11 +111,11 @@ Acknowledgements
 
 Supported by `Wellcome`_ and `EPSRC`_.
 
-
+.. _`Quickdraw`: https://quickdraw.withgoogle.com/data
 .. _`Wellcome EPSRC Centre for Interventional and Surgical Sciences`: http://www.ucl.ac.uk/weiss
 .. _`source code repository`: https://github.com/thompson318/ndjsonTosvg
 .. _`Documentation`: https://ndjsonTosvg.readthedocs.io
-.. _`SNAPPY`: https://weisslab.cs.ucl.ac.uk/WEISS/PlatformManagement/SNAPPY/wikis/home
+.. _`SciKit-Surgery`: https://github.com/UCL/scikit-surgery/wiki
 .. _`University College London (UCL)`: http://www.ucl.ac.uk/
 .. _`Wellcome`: https://wellcome.ac.uk/
 .. _`EPSRC`: https://www.epsrc.ac.uk/
