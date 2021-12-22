@@ -111,8 +111,9 @@ def ndjsontosvg(filein, numberofsamples, outsize=256,
         with open(outfilename, 'w') as f_out:
             drawing = item.get('drawing')
             _write_header(f_out, outsize, item.get('key_id'))
-            f_out.write('\t<rect width="100%" height="100%" ')
-            f_out.write('fill="{:s}" />\n'.format(backgroundcolour))
+            if backgroundcolour != "none":
+                f_out.write('\t<rect width="100%" height="100%" ')
+                f_out.write('fill="{:s}" />\n'.format(backgroundcolour))
             for line in drawing:
                 _draw_line(f_out, line, linecolour, scale)
             f_out.write('</svg>')

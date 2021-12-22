@@ -35,7 +35,8 @@ def main(args=None):
 
     parser.add_argument("-bc", "--backgroundcolour",
                         default="white",
-                        help="The background colour to use."
+                        help="The background colour to use. A value of " + \
+                            " 'none' will remove the background."
                         )
 
     parser.add_argument("-o", "--outdir",
@@ -51,7 +52,7 @@ def main(args=None):
 
     parser.add_argument("-rs", "--randomsort",
                         action="store_true",
-                        help="Make a random selection, rather than the" + \
+                        help="Make a random selection, rather than the " + \
                             "first n lines",
                         )
 
