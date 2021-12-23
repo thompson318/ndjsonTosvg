@@ -6,6 +6,10 @@ import ntpath
 import warnings
 import ndjson
 
+#pylint:disable=consider-using-f-string
+#pylint:disable=unspecified-encoding
+#pylint:disable=too-many-branches
+
 def _write_header(f_out, out_size, key_id):
     """
     Writes the svg header to file f
